@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface InfosServicesViewController : UIViewController {
+@interface InfosServicesViewController : UIViewController<UITextFieldDelegate> {
 	UISwitch *firewall;
 	UISwitch *wifi;
 	UISwitch *telephone;
@@ -18,7 +18,15 @@
 	UILabel *wifiLabel;
 	UILabel *telephoneLabel;
 	UILabel *hotspotLabel;
+	UILabel *loginLabel;
+	UILabel *passwordLabel;
+	UITextField *champlogin;
+	UITextField *champpassword;
 	UIButton *rebootButton;
+	UIButton *loginButton;
+	UITextView *loginTv;
+	UITextView *loggedTv;
+
 
 	NSURLConnection *getConnection;
 	NSMutableData *getData;
@@ -32,6 +40,11 @@
 -(void) getSynch;
 //-(void) postSynch;
 -(void) getAsynch;
+//fct check statut service
+-(void) checkServices;
+//gestion du login
+-(IBAction)selogger:(id)sender;
+- (void) identification:(NSString *)log withPassword:(NSString *) pass;
 //-(void) postAsynch;
 
 @end

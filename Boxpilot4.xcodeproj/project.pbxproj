@@ -15,10 +15,10 @@
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		4C9AD75013292DF700DA43DD /* Connection.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9AD74F13292DF700DA43DD /* Connection.m */; };
 		4C9AD76713292E5D00DA43DD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9AD76613292E5D00DA43DD /* SystemConfiguration.framework */; };
-		58904EEB1327BB2400BDDB88 /* InfosClientsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58904EE91327BB2400BDDB88 /* InfosClientsViewController.m */; };
-		58904EEC1327BB2400BDDB88 /* InfosClientsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58904EEA1327BB2400BDDB88 /* InfosClientsViewController.xib */; };
-		58904EF21327BB3500BDDB88 /* InfosBoxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58904EF01327BB3500BDDB88 /* InfosBoxViewController.m */; };
-		58904EF31327BB3500BDDB88 /* InfosBoxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58904EF11327BB3500BDDB88 /* InfosBoxViewController.xib */; };
+		5803AAEC132D21D00001BBC5 /* ListeClients.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5803AAEA132D21D00001BBC5 /* ListeClients.xib */; };
+		5803AB1E132D24FE0001BBC5 /* ListeClients.m in Sources */ = {isa = PBXBuildFile; fileRef = 5803AAE9132D21D00001BBC5 /* ListeClients.m */; };
+		5803AB57132D284D0001BBC5 /* InfosBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 5803AB55132D284D0001BBC5 /* InfosBox.m */; };
+		5803AB58132D284D0001BBC5 /* InfosBox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5803AB56132D284D0001BBC5 /* InfosBox.xib */; };
 		58904EF91327BB4400BDDB88 /* InfosServicesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58904EF71327BB4400BDDB88 /* InfosServicesViewController.m */; };
 		58904EFA1327BB4400BDDB88 /* InfosServicesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58904EF81327BB4400BDDB88 /* InfosServicesViewController.xib */; };
 /* End PBXBuildFile section */
@@ -36,12 +36,12 @@
 		4C9AD74E13292DF700DA43DD /* Connection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Connection.h; sourceTree = "<group>"; };
 		4C9AD74F13292DF700DA43DD /* Connection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Connection.m; sourceTree = "<group>"; };
 		4C9AD76613292E5D00DA43DD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		58904EE81327BB2400BDDB88 /* InfosClientsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfosClientsViewController.h; sourceTree = "<group>"; };
-		58904EE91327BB2400BDDB88 /* InfosClientsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfosClientsViewController.m; sourceTree = "<group>"; };
-		58904EEA1327BB2400BDDB88 /* InfosClientsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfosClientsViewController.xib; sourceTree = "<group>"; };
-		58904EEF1327BB3500BDDB88 /* InfosBoxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfosBoxViewController.h; sourceTree = "<group>"; };
-		58904EF01327BB3500BDDB88 /* InfosBoxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfosBoxViewController.m; sourceTree = "<group>"; };
-		58904EF11327BB3500BDDB88 /* InfosBoxViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfosBoxViewController.xib; sourceTree = "<group>"; };
+		5803AAE8132D21D00001BBC5 /* ListeClients.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListeClients.h; sourceTree = "<group>"; };
+		5803AAE9132D21D00001BBC5 /* ListeClients.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListeClients.m; sourceTree = "<group>"; };
+		5803AAEA132D21D00001BBC5 /* ListeClients.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListeClients.xib; sourceTree = "<group>"; };
+		5803AB54132D284D0001BBC5 /* InfosBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfosBox.h; sourceTree = "<group>"; };
+		5803AB55132D284D0001BBC5 /* InfosBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfosBox.m; sourceTree = "<group>"; };
+		5803AB56132D284D0001BBC5 /* InfosBox.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfosBox.xib; sourceTree = "<group>"; };
 		58904EF61327BB4400BDDB88 /* InfosServicesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfosServicesViewController.h; sourceTree = "<group>"; };
 		58904EF71327BB4400BDDB88 /* InfosServicesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfosServicesViewController.m; sourceTree = "<group>"; };
 		58904EF81327BB4400BDDB88 /* InfosServicesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfosServicesViewController.xib; sourceTree = "<group>"; };
@@ -84,9 +84,6 @@
 			isa = PBXGroup;
 			children = (
 				4C9AD74D13292DA600DA43DD /* Methodes */,
-				58904EEF1327BB3500BDDB88 /* InfosBoxViewController.h */,
-				58904EF01327BB3500BDDB88 /* InfosBoxViewController.m */,
-				58904EF11327BB3500BDDB88 /* InfosBoxViewController.xib */,
 				58904EF61327BB4400BDDB88 /* InfosServicesViewController.h */,
 				58904EF71327BB4400BDDB88 /* InfosServicesViewController.m */,
 				58904EF81327BB4400BDDB88 /* InfosServicesViewController.xib */,
@@ -95,9 +92,12 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				58904EE81327BB2400BDDB88 /* InfosClientsViewController.h */,
-				58904EE91327BB2400BDDB88 /* InfosClientsViewController.m */,
-				58904EEA1327BB2400BDDB88 /* InfosClientsViewController.xib */,
+				5803AAE8132D21D00001BBC5 /* ListeClients.h */,
+				5803AAE9132D21D00001BBC5 /* ListeClients.m */,
+				5803AAEA132D21D00001BBC5 /* ListeClients.xib */,
+				5803AB54132D284D0001BBC5 /* InfosBox.h */,
+				5803AB55132D284D0001BBC5 /* InfosBox.m */,
+				5803AB56132D284D0001BBC5 /* InfosBox.xib */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -190,9 +190,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
-				58904EEC1327BB2400BDDB88 /* InfosClientsViewController.xib in Resources */,
-				58904EF31327BB3500BDDB88 /* InfosBoxViewController.xib in Resources */,
 				58904EFA1327BB4400BDDB88 /* InfosServicesViewController.xib in Resources */,
+				5803AAEC132D21D00001BBC5 /* ListeClients.xib in Resources */,
+				5803AB58132D284D0001BBC5 /* InfosBox.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,10 +205,10 @@
 			files = (
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* Boxpilot4AppDelegate.m in Sources */,
-				58904EEB1327BB2400BDDB88 /* InfosClientsViewController.m in Sources */,
-				58904EF21327BB3500BDDB88 /* InfosBoxViewController.m in Sources */,
 				58904EF91327BB4400BDDB88 /* InfosServicesViewController.m in Sources */,
 				4C9AD75013292DF700DA43DD /* Connection.m in Sources */,
+				5803AB1E132D24FE0001BBC5 /* ListeClients.m in Sources */,
+				5803AB57132D284D0001BBC5 /* InfosBox.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

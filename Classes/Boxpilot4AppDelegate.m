@@ -7,9 +7,9 @@
 //
 
 #import "Boxpilot4AppDelegate.h"
-#import "InfosClientsViewController.h"
-#import "InfosBoxViewController.h"
+#import "InfosBox.h"
 #import "InfosServicesViewController.h"
+#import "ListeClients.h"
 
 @implementation Boxpilot4AppDelegate
 
@@ -18,20 +18,24 @@
 @synthesize navigationBarController;
 
 
-
 #pragma mark -
 #pragma mark Application lifecycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
+
+	
 	self.tabBarController = [[[UITabBarController alloc] init]autorelease];
 
     // Override point for customization after application launch.
 	
-	InfosClientsViewController *infosclients = [[InfosClientsViewController alloc]
-								  initWithNibName:@"InfosClientsViewController" bundle:nil];
+	ListeClients *infosclients = [[ListeClients alloc]
+												initWithNibName:@"ListeClients" bundle:nil];
 	infosclients.title=@"clients";
-	InfosBoxViewController *infosbox = [[InfosBoxViewController alloc]
-						initWithNibName:@"InfosBoxViewController" bundle:nil];
+	/*InfosClientsViewController *infosclients = [[InfosClientsViewController alloc]
+								  initWithNibName:@"InfosClientsViewController" bundle:nil];
+	infosclients.title=@"clients";*/
+	InfosBox *infosbox = [[InfosBox alloc]
+						initWithNibName:@"InfosBox" bundle:nil];
 	infosbox.title=@"box";
 	InfosServicesViewController *services = [[InfosServicesViewController alloc]
 						initWithNibName:@"InfosServicesViewController" bundle:nil];
@@ -43,8 +47,7 @@
 	[infosbox release];
 	[services release];
 
-	//label test deco infobox
-	[decoLabel setText:@"Coucou"];
+
 							 
 																			 
 	[window addSubview:tabBarController.view];

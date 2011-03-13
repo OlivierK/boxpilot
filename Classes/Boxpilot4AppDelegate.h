@@ -13,16 +13,18 @@
 	//creation de la tabbar
 	UITabBarController *tabBarController;
 	UINavigationController *navigationBarController;
-	//declaration label test deco
-	IBOutlet UILabel *decoLabel;
+	
 	
 	NSURLConnection *getConnection;
 	NSMutableData *getData;
 	NSURLConnection *postConnection;
 	NSMutableData *postData;
+
 }
 
+
 @property (nonatomic, retain) IBOutlet UIWindow *window;
+
 @property (nonatomic, retain) UITabBarController *tabBarController;
 @property (nonatomic, retain) UINavigationController *navigationBarController;
 @end
