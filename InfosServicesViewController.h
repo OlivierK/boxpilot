@@ -37,7 +37,7 @@
 
 }
 -(void)actualiserLabel:(NSData *)data;
--(void) getSynch;
+-(void) getSynch:(NSString *)string;
 //-(void) postSynch;
 -(void) getAsynch;
 //fct check statut service

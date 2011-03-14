@@ -66,7 +66,7 @@ NSString* login = @"ok";
 - (void)gestionFirewall:(id)sender{
 	if (firewall.on) {
 		//firewallLabel.text = @"Firewall ON";
-		[self getSynch];
+		[self getSynch:@"http://neufbox/api/1.0/?method=auth.getToken"];
 		
 	}else {
 			firewallLabel.text = @"Firewall OFF";
@@ -237,6 +237,12 @@ NSString* login = @"ok";
 	}
 }
 
+- (void)actualiserLabel:(NSData *)data{
+	
+	NSString *message = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding ];
+	firewallLabel.text=message;
+	[message release];
+}
 	
 - (void) getAsynch{
 	//on passe le paramettre dans l'url -> Get
@@ -249,34 +255,29 @@ NSString* login = @"ok";
 	[getConnection release];
 }
 
-- (void) getSynch{
+
+- (void) getSynch:(NSString *)string{
 	if(![Connection reseauDisponible]){
-			[Connection afficherAlerte:@"pas de réseau dispo"];
+		[Connection afficherAlerte:@"Pas de réseau disponible"];
 	}
- else {
+	else {
 		//on passe le paramettre dans l'url -> methode Get
-		NSURL *url = [[NSURL alloc] initWithString:@"http://neufbox/api/1.0/?method=auth.getToken"];
+		NSURL *url = [[NSURL alloc] initWithString:string];
 		NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
 		[url release];
 		NSURLResponse *response=nil;
 		NSError *error=nil;
 		NSData *data = [NSURLConnection sendSynchronousRequest:request
-		returningResponse:&response error:&error];
- //l'application va bloquer ici le temps de faire la requete
+											 returningResponse:&response error:&error];
+		//l'application va bloquer ici le temps de faire la requete
 		[request release];
 		[self actualiserLabel:data];
-	 if(error){
-		 [Connection afficherAlerte:[error localizedDescription]];
+		if(error){
+			[Connection afficherAlerte:[error localizedDescription]];
 		}		
 	}
- }
-
-- (void)actualiserLabel:(NSData *)data{
-	
-	NSString *message = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding ];
-	firewallLabel.text=message;
-	[message release];
 }
+
 
 //methode qui rétracte le clavier lors du clic sur retour
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {

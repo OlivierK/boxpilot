@@ -15,5 +15,5 @@
 	
 +(BOOL) reseauDisponible;
 +(void) afficherAlerte:(NSString *)string;
-
++(void) afficherAlerteFirmware:(NSString *)string;
 @end

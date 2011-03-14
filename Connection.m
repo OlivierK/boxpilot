@@ -40,10 +40,21 @@
 
 +(void) afficherAlerte:(NSString *)string{
 	
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alerte"
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Erreur: Absence de réseau"
 													message:string delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil];
 	[alert show];
 	[alert release];
 }
+
++(void) afficherAlerteFirmware:(NSString *)string{
+	
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Erreur: Mauvais firmware"
+													message:string delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil];
+	[alert show];
+	[alert release];
+}
+
+
+
 
 @end

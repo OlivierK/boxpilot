@@ -7,6 +7,7 @@
 //
 
 #import "ListeClients.h"
+#import "Connection.h"
 
 
 @implementation ListeClients
@@ -18,11 +19,130 @@
 
 - (void)viewDidLoad {
 	//ajout des données
-	lanNetwork = [[NSArray alloc] initWithObjects:@"00:14:C9:38:Z8:2F - 192.168.1.2",nil];
-	wifiNetwork = [[NSArray alloc] initWithObjects:@"F0:B4:34:C3:CB:D9 - 192.168.1.123",nil];
+	//lanNetwork = [[NSArray alloc] initWithObjects:@"00:14:C9:38:Z8:2F - 192.168.1.2",nil];
+	//wifiNetwork = [[NSArray alloc] initWithObjects:@"F0:B4:34:C3:CB:D9 - 192.168.1.123",nil];
 	[super viewDidLoad];
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+	
+	//if qui permet de vérifier si l'Iphone possède une connection internet
+	if(![Connection reseauDisponible]){
+		[Connection afficherAlerte:@"Votre Iphone ne dispose pas de connection réseau. Vérifiez que votre WiFi est activé ou que vous avez accés à internet"];
+	}
+	else {
+	
+		if ([stories count]==0)
+		{
+			path = @"http://neufbox/api/1.0/?method=lan.getHostsList";
+			[self parseXMLFileAtURL:path];
+		} 
+	}
+}
+
+- (void)parseXMLFileAtURL:(NSString *)URL {
+	stories = [[NSMutableArray alloc] init];
+	
+	NSURL *xmlURL = [NSURL URLWithString:URL];
+	
+	rssParser=[[NSXMLParser alloc] initWithContentsOfURL:xmlURL];
+	
+	[rssParser setDelegate:self];
+	
+	[rssParser setShouldProcessNamespaces:NO];
+	[rssParser setShouldReportNamespacePrefixes:NO];
+	
+	
+	[rssParser setShouldResolveExternalEntities:NO];
+	
+	[rssParser parse];
+}
+
+- (void)parserDidStartDocument:(NSXMLParser *)parser {
+	NSLog(@"found file and started parsing");
+}
+- (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
+    NSString * errorString = [NSString stringWithFormat:@"Verifier que votre neufbox est allumée et que vous êtes connecté à celle-ci (Erreur n°%i)", [parseError code]];
+    NSLog(@"error parsing XML: %@", errorString);
+	
+    UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:@"Erreur: Aucune neufbox détectée" message:errorString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [errorAlert show];
+}
+
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict{
+    NSLog(@"found this element: %@", elementName);
+    currentElement = [elementName copy];
+	
+    if ([elementName isEqualToString:@"rsp"]) {
+        // clear out our story item caches...
+        item = [[NSMutableDictionary alloc] init];
+		currentHost = [[NSMutableString alloc] init];
+		currentStat = [[NSMutableString alloc] init];
+		currentStat = [attributeDict objectForKey:@"stat"];
+		if (currentStat)
+			NSLog(@"%@",currentStat);
+		/*currentDate = [[NSMutableString alloc] init];
+		 currentSummary = [[NSMutableString alloc] init];
+		 currentLink = [[NSMutableString alloc] init];*/
+	}
+	else if([elementName isEqualToString:@"host"]) {
+		
+		/*//Initialize the book.
+		 currentProductId = [[NSMutableString alloc] init];
+		 
+		 //Extract the attribute here.
+		 currentProductId= [attributeDict objectForKey:@"product_id"];*/
+		
+		NSString *currentName = [attributeDict objectForKey:@"name"];
+		if (currentName)
+			NSLog(@"%@",currentName);
+		return;
+		
+	}
+}
+
+- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName{
+	
+	NSLog(@"ended element: %@", elementName);
+	
+    if ([elementName isEqualToString:@"rsp"]) {
+		// save values to an item, then store that item into the array...
+		[item setObject:currentHost forKey:@"host"];
+		[item setObject:currentStat forKey:@"stat"];
+		/*[item setObject:currentLink forKey:@"link"];
+		 [item setObject:currentSummary forKey:@"summary"];
+		 [item setObject:currentDate forKey:@"date"];*/
+		
+		[stories addObject:[item copy]];
+		NSLog(@"adding story: %@", currentHost);
+	}
+	
+	
+}
+
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string{
+    NSLog(@"found characters: %@", string);
+    // save the characters for the current item...
+    if ([currentElement isEqualToString:@"host"]) {
+        [currentHost appendString:string];
+    }
+	/*else if ([currentElement isEqualToString:@"product_id"]) {
+	 [currentProductId appendString:string];
+	 }*/
+	/* else if ([currentElement isEqualToString:@"link"]) {
+	 [currentLink appendString:string];
+	 } else if ([currentElement isEqualToString:@"description"]) {
+	 [currentSummary appendString:string];
+	 } else if ([currentElement isEqualToString:@"pubDate"]) {
+	 [currentDate appendString:string];
+	 }*/
+	
+}
+
+- (void)parserDidEndDocument:(NSXMLParser *)parser {
+	
+    NSLog(@"all done!");
+    NSLog(@"stories array has %d items", [stories count]);
+    [tblSimpleTable reloadData];
 }
 
 
@@ -66,10 +186,11 @@
 
 //Retourne le nombre de cellules en comptant le nombre d'éléments du tableau
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	if(section == 0)
+	/*if(section == 0)
 		return [lanNetwork count];
 	else
-		return [wifiNetwork count];
+		return [wifiNetwork count];*/
+	return [stories count];
 }
 
 
@@ -83,10 +204,21 @@
 	}
 	
 	// Set up the cell...
-	if(indexPath.section == 0)
-		cell.text = [lanNetwork objectAtIndex:indexPath.row];
+
+	int storyIndex = [indexPath indexAtPosition:[indexPath length]-1];
+	
+	//if qui permet de tester si la méthode employé est compatible avec le firmware de la neufbox utilisé
+	if([[[stories objectAtIndex:storyIndex] objectForKey:@"stat"] isEqualToString:@"fail"])
+	{
+		[Connection afficherAlerteFirmware:@"Vous ne disposez pas de cette fonctionnalité car votre neufbox n'est pas à jour. Cette fonctionnalité est utilisée à partir du firmware 3.0.7"];
+		cell.text = [[stories objectAtIndex:storyIndex] objectForKey:@"stat"];
+
+	}
 	else
-		cell.text = [wifiNetwork objectAtIndex:indexPath.row];
+	{
+		cell.text = [[stories objectAtIndex:storyIndex] objectForKey:@"host"];
+		
+	}
 	return cell;
 }
 
