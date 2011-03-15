@@ -26,6 +26,7 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 	
 	//if qui permet de vérifier si l'Iphone possède une connection internet
+
 	if(![Connection reseauDisponible]){
 		[Connection afficherAlerte:@"Votre Iphone ne dispose pas de connection réseau. Vérifiez que votre WiFi est activé ou que vous avez accés à internet"];
 	}

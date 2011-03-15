@@ -37,6 +37,34 @@
 	return (isReachable && !needsConnection) ? YES : NO;
 	
 }
+/* Fonctions pour tester le WiFI
++ (Connection*) reachabilityForLocalWiFi;
+{
+	struct sockaddr_in localWifiAddress;
+	bzero(&localWifiAddress, sizeof(localWifiAddress));
+	localWifiAddress.sin_len = sizeof(localWifiAddress);
+	localWifiAddress.sin_family = AF_INET;
+	// IN_LINKLOCALNETNUM is defined in <netinet/in.h> as 169.254.0.0
+	localWifiAddress.sin_addr.s_addr = htonl(IN_LINKLOCALNETNUM);
+	Connection* retVal = [self reachabilityWithAddress: &localWifiAddress];
+	if(retVal!= NULL)
+	{
+		retVal->localWiFiRef = YES;
+	}
+	return retVal;
+}
+
+- (NetworkStatus) localWiFiStatusForFlags: (SCNetworkReachabilityFlags) flags
+{
+	PrintReachabilityFlags(flags, "localWiFiStatusForFlags");
+	
+	BOOL retVal = NotReachable;
+	if((flags & kSCNetworkReachabilityFlagsReachable) && (flags & kSCNetworkReachabilityFlagsIsDirect))
+	{
+		retVal = ReachableViaWiFi;	
+	}
+	return retVal;
+}*/
 
 +(void) afficherAlerte:(NSString *)string{
 	
