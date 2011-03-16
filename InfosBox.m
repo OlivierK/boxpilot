@@ -49,8 +49,8 @@
 	[rssParser setDelegate:self];
 	     
 	[rssParser setShouldProcessNamespaces:NO];
-	[rssParser setShouldReportNamespacePrefixes:NO];
 	
+	[rssParser setShouldReportNamespacePrefixes:NO];
 	
 	[rssParser setShouldResolveExternalEntities:NO];
 	     
@@ -90,15 +90,34 @@
 		
 		currentProductId = [[NSMutableString alloc] init];
 		currentMacAddr = [[NSMutableString alloc] init];
+		currentNetMode = [[NSMutableString alloc] init];
+		currentNetInfra = [[NSMutableString alloc] init];
+		currentUptime = [[NSMutableString alloc] init];
+		currentFirmware = [[NSMutableString alloc] init];
 		
 		currentProductId = [attributeDict objectForKey:@"product_id"];
 		if (currentProductId)
-			NSLog(@"%@",currentProductId);
+			NSLog(@"Modèle: %@",currentProductId);
 	
-		
 		currentMacAddr = [attributeDict objectForKey:@"mac_addr"];
 		if (currentMacAddr)
-			NSLog(@"%@",currentMacAddr);
+			NSLog(@"Adresse Mac: %@",currentMacAddr);
+		
+		currentNetMode = [attributeDict objectForKey:@"net_mode"];
+		if (currentNetMode)
+			NSLog(@"Mode: %@",currentNetMode);
+				
+		currentNetInfra = [attributeDict objectForKey:@"net_infra"];
+		if (currentNetInfra)
+			NSLog(@"Connection internet: %@",currentNetInfra);
+				
+		currentUptime = [attributeDict objectForKey:@"uptime"];
+		if (currentUptime)
+			NSLog(@"Temps d'activité de la box: %@",currentUptime);
+				
+		currentFirmware = [attributeDict objectForKey:@"version_mainfirmware"];
+		if (currentFirmware)
+			NSLog(@"Firmware: %@",currentFirmware);
 		return;
 		
 	}
@@ -113,6 +132,11 @@
 			[item setObject:currentSystem forKey:@"System"];
 			[item setObject:currentProductId forKey:@"product_id"];
 			[item setObject:currentMacAddr forKey:@"mac_addr"];
+			[item setObject:currentNetMode forKey:@"net_mode"];
+			[item setObject:currentNetMode forKey:@"net_infra"];
+			[item setObject:currentNetMode forKey:@"uptime"];
+			[item setObject:currentNetMode forKey:@"version_mainfirmware"];
+		
 		
 	        /*[item setObject:currentLink forKey:@"link"];
 	        [item setObject:currentSummary forKey:@"summary"];
@@ -121,7 +145,6 @@
 			[stories addObject:[item copy]];
 		        NSLog(@"adding story: %@", currentSystem);
 		    }
-	
 	
 	}
 
@@ -215,6 +238,12 @@
 	int storyIndex = [indexPath indexAtPosition:[indexPath length]-1];
 	cell.text = [[stories objectAtIndex:storyIndex] objectForKey:@"product_id"];
 	//cell.text = [[stories objectAtIndex:storyIndex] objectForKey:@"mac_addr"];
+	//cell.text = [[stories objectAtIndex:storyIndex] objectForKey:@"net_mode"];
+	//cell.text = [[stories objectAtIndex:storyIndex] objectForKey:@"net_infra"];
+	//cell.text = [[stories objectAtIndex:storyIndex] objectForKey:@"uptime"];
+	//cell.text = [[stories objectAtIndex:storyIndex] objectForKey:@"version_mainfirmware"];
+
+
 	return cell;
 	
 }

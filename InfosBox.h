@@ -25,7 +25,7 @@
 	    
 	NSString *currentElement;
 	
-	NSMutableString *currentSystem, *currentProductId, *currentMacAddr, *currentDate, *currentSummary, *currentLink;
+	NSMutableString *currentSystem, *currentProductId, *currentMacAddr, *currentNetMode, *currentNetInfra, *currentUptime, *currentFirmware, *currentDate, *currentSummary, *currentLink;
 }
 
 - (void)parseXMLFileAtURL:(NSString *)URL;
