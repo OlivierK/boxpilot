@@ -8,27 +8,25 @@
 
 #import <UIKit/UIKit.h>
 
-@interface InfosBox : UITableViewController <NSXMLParserDelegate> {
+@interface InfosLigneAdsl : UITableViewController <NSXMLParserDelegate> {
 	IBOutlet UITableView *tblSimpleTable;
 	NSArray *infosSysteme;
 	NSArray *lanNetwork;
 	
-	UILabel *label1;
-	UILabel *label2;
-	
+
 	
 	//IBOutlet UITableView *tutorielsTable;
 	CGSize cellSize;
 	NSXMLParser *rssParser;
 	NSMutableArray *stories;
-	    
+	
 	NSMutableDictionary *item;
-	     
+	
 	NSString *path;
-	    
+	
 	NSString *currentElement;
 	
-	NSMutableString *currentSystem, *currentProductId, *currentMacAddr, *currentNetMode, *currentNetInfra, *currentUptime, *currentFirmware, *currentDate, *currentSummary, *currentLink;
+	NSMutableString *currentDsl, *currentCounter, *currentStatus, *currentCrc, *currentRateDown, *currentRateUp, *currentLink;
 }
 
 - (void)parseXMLFileAtURL:(NSString *)URL;

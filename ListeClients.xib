@@ -53,6 +53,10 @@
 								<string key="NSFrameSize">{320, 44}</string>
 								<reference key="NSSuperview" ref="125157142"/>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<object class="NSColor" key="IBUITintColor">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MC43NSAwIDAuMDUyOTU0OTM0OTkAA</bytes>
+								</object>
 								<object class="NSArray" key="IBUIItems">
 									<bool key="EncodedWithXMLCoder">YES</bool>
 									<object class="IBUINavigationItem" id="1032826842">

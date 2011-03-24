@@ -6,11 +6,11 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "InfosBox.h" 
+#import "InfosLigneAdsl.h" 
 #import "Connection.h"
 
 
-@implementation InfosBox
+@implementation InfosLigneAdsl
 
 
 #pragma mark -
@@ -29,155 +29,150 @@
 		[Connection afficherAlerte:@"Votre Iphone ne dispose pas de connection réseau. Vérifiez que votre WiFi est activé ou que vous avez accés à internet"];
 	}
 	else {
-	   
+		
 		if ([stories count]==0)
 		{
-			path = @"http://neufbox/api/1.0/?method=system.getInfo";
+			path = @"http://neufbox/api/1.0/?method=dsl.getInfo";
 			[self parseXMLFileAtURL:path];
 		}  
 	}
-
+	
 }
 
 - (void)parseXMLFileAtURL:(NSString *)URL {
 	stories = [[NSMutableArray alloc] init];
-	     
+	
 	NSURL *xmlURL = [NSURL URLWithString:URL];
-	     
+	
 	rssParser=[[NSXMLParser alloc] initWithContentsOfURL:xmlURL];
-	    
+	
 	[rssParser setDelegate:self];
-	     
+	
 	[rssParser setShouldProcessNamespaces:NO];
 	
 	[rssParser setShouldReportNamespacePrefixes:NO];
 	
 	[rssParser setShouldResolveExternalEntities:NO];
-	     
+	
 	[rssParser parse];
-	}
+}
 
 - (void)parserDidStartDocument:(NSXMLParser *)parser {
-   NSLog(@"found file and started parsing");
+	NSLog(@"found file and started parsing");
 }
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
     NSString * errorString = [NSString stringWithFormat:@"Verifier que votre neufbox est allumée et que vous êtes connecté à celle-ci (Erreur n°%i)", [parseError code]];
     NSLog(@"error parsing XML: %@", errorString);
-     
+	
     UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:@"Erreur: Aucune neufbox détectée" message:errorString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [errorAlert show];
 }
- 
+
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict{
     NSLog(@"found this element: %@", elementName);
     currentElement = [elementName copy];
-     
+	
     if ([elementName isEqualToString:@"rsp"]) {
         // clear out our story item caches...
         item = [[NSMutableDictionary alloc] init];
-		currentSystem = [[NSMutableString alloc] init];
+		currentDsl = [[NSMutableString alloc] init];
 		/*currentDate = [[NSMutableString alloc] init];
-		currentSummary = [[NSMutableString alloc] init];
-		currentLink = [[NSMutableString alloc] init];*/
-		}
-	else if([elementName isEqualToString:@"system"]) {
+		 currentSummary = [[NSMutableString alloc] init];
+		 currentLink = [[NSMutableString alloc] init];*/
+	}
+	else if([elementName isEqualToString:@"dsl"]) {
 		
 		/*//Initialize the book.
-		currentProductId = [[NSMutableString alloc] init];
+		 currentProductId = [[NSMutableString alloc] init];
+		 
+		 //Extract the attribute here.
+		 currentProductId= [attributeDict objectForKey:@"product_id"];*/		
 		
-		//Extract the attribute here.
-		currentProductId= [attributeDict objectForKey:@"product_id"];*/
+		currentStatus = [[NSMutableString alloc] init];
+		currentCounter = [[NSMutableString alloc] init];
+		currentCrc = [[NSMutableString alloc] init];
+		currentRateDown = [[NSMutableString alloc] init];
+		currentRateUp = [[NSMutableString alloc] init];
 		
-		currentProductId = [[NSMutableString alloc] init];
-		currentMacAddr = [[NSMutableString alloc] init];
-		currentNetMode = [[NSMutableString alloc] init];
-		currentNetInfra = [[NSMutableString alloc] init];
-		currentUptime = [[NSMutableString alloc] init];
-		currentFirmware = [[NSMutableString alloc] init];
+
+		currentStatus = [attributeDict objectForKey:@"status"];
+		if (currentStatus)
+			NSLog(@"Adresse Mac: %@",currentStatus);
 		
-		currentProductId = [attributeDict objectForKey:@"product_id"];
-		if (currentProductId)
-			NSLog(@"Modèle: %@",currentProductId);
-	
-		currentMacAddr = [attributeDict objectForKey:@"mac_addr"];
-		if (currentMacAddr)
-			NSLog(@"Adresse Mac: %@",currentMacAddr);
+		currentCounter = [attributeDict objectForKey:@"counter"];
+		if (currentCounter)
+			NSLog(@"Modèle: %@",currentCounter);
 		
-		currentNetMode = [attributeDict objectForKey:@"net_mode"];
-		if (currentNetMode)
-			NSLog(@"Mode: %@",currentNetMode);
-				
-		currentNetInfra = [attributeDict objectForKey:@"net_infra"];
-		if (currentNetInfra)
-			NSLog(@"Connection internet: %@",currentNetInfra);
-				
-		currentUptime = [attributeDict objectForKey:@"uptime"];
-		if (currentUptime)
-			NSLog(@"Temps d'activité de la box: %@",currentUptime);
-				
-		currentFirmware = [attributeDict objectForKey:@"version_mainfirmware"];
-		if (currentFirmware)
-			NSLog(@"Firmware: %@",currentFirmware);
+		currentCrc = [attributeDict objectForKey:@"crc"];
+		if (currentCrc)
+			NSLog(@"Mode: %@",currentCrc);
+		
+		currentRateDown = [attributeDict objectForKey:@"rate_down"];
+		if (currentRateDown)
+			NSLog(@"Connection internet: %@",currentRateDown);
+		
+		currentRateUp = [attributeDict objectForKey:@"rate_up"];
+		if (currentRateUp)
+			NSLog(@"Temps d'activité de la box: %@",currentRateUp);
 		return;
 		
 	}
 }
- 
+
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName{
-	     
-	    NSLog(@"ended element: %@", elementName);
+	
+	NSLog(@"ended element: %@", elementName);
 	
     if ([elementName isEqualToString:@"rsp"]) {
-	        // save values to an item, then store that item into the array...
-			[item setObject:currentSystem forKey:@"System"];
-			[item setObject:currentProductId forKey:@"product_id"];
-			[item setObject:currentMacAddr forKey:@"mac_addr"];
-			[item setObject:currentNetMode forKey:@"net_mode"];
-			[item setObject:currentNetInfra forKey:@"net_infra"];
-			[item setObject:currentUptime forKey:@"uptime"];
-			[item setObject:currentFirmware forKey:@"version_mainfirmware"];
+		// save values to an item, then store that item into the array...
+		[item setObject:currentDsl forKey:@"dsl"];
+		[item setObject:currentStatus forKey:@"status"];
+		[item setObject:currentCounter forKey:@"counter"];
+		[item setObject:currentCrc forKey:@"crc"];
+		[item setObject:currentRateDown forKey:@"rate_down"];
+		[item setObject:currentRateUp forKey:@"rate_up"];
 		
 		//[stories addObject:currentSystem];
 		
 		
-	        /*[item setObject:currentLink forKey:@"link"];
-	        [item setObject:currentSummary forKey:@"summary"];
-	        [item setObject:currentDate forKey:@"date"];*/
-		         
-		[stories addObject:[item copy]];
-
-
-	//[stories addObject:currentSystem];
-		//[stories addObject:currentProductId];
-		//[stories addObject:currentMacAddr];
-		//[stories addObject:currentNetMode];
+		/*[item setObject:currentLink forKey:@"link"];
+		 [item setObject:currentSummary forKey:@"summary"];
+		 [item setObject:currentDate forKey:@"date"];*/
 		
-		        NSLog(@"adding story: %@", currentSystem);
-		    }
-	
+		[stories addObject:[item copy]];
+		
+		
+		//[stories addObject:currentSystem];
+		//[stories addObject:currentProductId];
+		//[stories addObject:currentStatus];
+		//[stories addObject:currentCrc];
+		
+		NSLog(@"adding story: %@", currentDsl);
 	}
+	
+}
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string{
     NSLog(@"found characters: %@", string);
     // save the characters for the current item...
-    if ([currentElement isEqualToString:@"system"]) {
-        [currentSystem appendString:string];
+    if ([currentElement isEqualToString:@"dsl"]) {
+        [currentDsl appendString:string];
     }
 	/*else if ([currentElement isEqualToString:@"product_id"]) {
-        [currentProductId appendString:string];
-    }*/
+	 [currentProductId appendString:string];
+	 }*/
 	/* else if ([currentElement isEqualToString:@"link"]) {
-        [currentLink appendString:string];
-    } else if ([currentElement isEqualToString:@"description"]) {
-        [currentSummary appendString:string];
-    } else if ([currentElement isEqualToString:@"pubDate"]) {
-			        [currentDate appendString:string];
-			    }*/
+	 [currentLink appendString:string];
+	 } else if ([currentElement isEqualToString:@"description"]) {
+	 [currentSummary appendString:string];
+	 } else if ([currentElement isEqualToString:@"pubDate"]) {
+	 [currentDate appendString:string];
+	 }*/
 	
-	}
- 
+}
+
 - (void)parserDidEndDocument:(NSXMLParser *)parser {
-     
+	
     NSLog(@"all done!");
     NSLog(@"stories array has %d items", [stories count]);
     [tblSimpleTable reloadData];
@@ -218,7 +213,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return 6;
+    return 5;
 }
 
 
@@ -229,7 +224,7 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-		
+	
 	static NSString *CellIdentifier = @"Cell";
 	
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -238,80 +233,78 @@
 	}
 	
 	int storyIndex = [indexPath indexAtPosition:[indexPath length]-1];
-
+	
 	
 	// Set up the cell...
 	if(indexPath.section == 0)
-		cell.text = [[stories objectAtIndex:storyIndex] objectForKey:@"product_id"];
+		cell.text = [[stories objectAtIndex:storyIndex] objectForKey:@"status"];
 	else if(indexPath.section == 1)
-			cell.text = [[stories objectAtIndex:storyIndex] objectForKey:@"mac_addr"];
+		cell.text = [[stories objectAtIndex:storyIndex] objectForKey:@"counter"];
 	else if(indexPath.section == 2)
-			cell.text = [[stories objectAtIndex:storyIndex] objectForKey:@"net_mode"];
+		cell.text = [[stories objectAtIndex:storyIndex] objectForKey:@"crc"];
 	else if(indexPath.section == 3)
-		cell.text = [[stories objectAtIndex:storyIndex] objectForKey:@"net_infra"];
+		cell.text = [[stories objectAtIndex:storyIndex] objectForKey:@"rate_down"];
 	else if(indexPath.section == 4)
-		cell.text = [[stories objectAtIndex:storyIndex] objectForKey:@"uptime"];
-	else if(indexPath.section == 5)
-		cell.text = [[stories objectAtIndex:storyIndex] objectForKey:@"version_mainfirmware"];
+		cell.text = [[stories objectAtIndex:storyIndex] objectForKey:@"rate_up"];
 	return cell;
 	
- 
-			//[stories addObject:[item setObject:currentSystem forKey:@"System"]];
+	
+	//[stories addObject:[item setObject:currentSystem forKey:@"System"]];
 	//
-
+	
 	//
-	//cell.text = [[stories objectAtIndex:storyIndex] objectForKey:@"mac_addr"];
-	//
-	//
+	//cell.text = [[stories objectAtIndex:storyIndex] objectForKey:@"status"];
 	//
 	//
-
-
+	//
+	//
+	
+	
 	//return cell;
+	
+	[currentStatus release];
 	
 }
 
 /*- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	     
-	    static NSString *CellIdentifier = @"CellIndent";
-	     
-	    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-	    if (cell == nil) {
-	        UIViewController *c = [[UIViewController alloc] initWithNibName:@"TableViewCell" bundle:nil];
-	        cell = (TableViewCell *)c.view;
-	        [c release];
-	    }
-	     
-	    // Set up the cell...
-	    int storyIndex = [indexPath indexAtPosition:[indexPath length]-1];
-	    cell.label1.text = [[stories objectAtIndex:storyIndex] objectForKey:@"title"];
-	    return cell;
-	}*/
+ 
+ static NSString *CellIdentifier = @"CellIndent";
+ 
+ UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+ if (cell == nil) {
+ UIViewController *c = [[UIViewController alloc] initWithNibName:@"TableViewCell" bundle:nil];
+ cell = (TableViewCell *)c.view;
+ [c release];
+ }
+ 
+ // Set up the cell...
+ int storyIndex = [indexPath indexAtPosition:[indexPath length]-1];
+ cell.label1.text = [[stories objectAtIndex:storyIndex] objectForKey:@"title"];
+ return cell;
+ }*/
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
 	if(section == 0)
-		return @"Modèle de neufbox";
+		return @"Statut de la connection";
 	else if(section == 1)
-		return @"Adresse Mac";
+		return @"Nombre de connexions effectuées";
 	else if(section == 2)
-		return @"Mode";
+		return @"Nombre d’erreurs CRC";
 	else if(section == 3)
-		return @"Connection internet";
+		return @"Débit flux descendant";
 	else if(section == 4)
-		return @"Temps d'activité (en s)";
-	else if(section == 5)
-		return @"Firmware";
+		return @"Débit flux montant";
 }
 
 /*- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
+ return 1;
+ }
  
  
-// Customize the number of rows in the table view.
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [stories count];
-}*/
+ // Customize the number of rows in the table view.
+ - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+ return [stories count];
+ }*/
 // Customize the appearance of table view cells.
 //- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 //}

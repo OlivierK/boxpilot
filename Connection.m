@@ -81,6 +81,13 @@
 	[alert show];
 	[alert release];
 }
++(void) afficherAlerteIdentification:(NSString *)string{
+	
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Erreur: Problème d'identification"
+													message:string delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil];
+	[alert show];
+	[alert release];
+}
 
 
 

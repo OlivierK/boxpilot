@@ -10,6 +10,8 @@
 #import "InfosBox.h"
 #import "InfosServicesViewController.h"
 #import "ListeClients.h"
+#import "InfosLigneAdsl.h"
+
 
 @implementation Boxpilot4AppDelegate
 
@@ -27,29 +29,46 @@
 	self.tabBarController = [[[UITabBarController alloc] init]autorelease];
 
     // Override point for customization after application launch.
+	InfosBox *infosbox = [[InfosBox alloc]
+						  initWithNibName:@"InfosBox" bundle:nil];
+	UITabBarItem *itemBox = [[UITabBarItem alloc] initWithTitle:@"Box" image:[UIImage imageNamed:@"infosBox.png"] tag:2]; 
+	infosbox.tabBarItem = itemBox;
+	infosbox.title=@"Infos box";
+	
+	InfosLigneAdsl *ligneAdsl = [[InfosLigneAdsl alloc]
+								 initWithNibName:@"InfosLigneAdsl" bundle:nil];
+	UITabBarItem *itemAdsl = [[UITabBarItem alloc] initWithTitle:@"Adsl" image:[UIImage imageNamed:@"infosAdsl.png"] tag:1]; 
+	ligneAdsl.tabBarItem = itemAdsl;
+	ligneAdsl.title=@"Infos ligne Adsl";
+	
 	
 	ListeClients *infosclients = [[ListeClients alloc]
-												initWithNibName:@"ListeClients" bundle:nil];
-	infosclients.title=@"clients";
+								  initWithNibName:@"ListeClients" bundle:nil];
+	UITabBarItem *itemClients = [[UITabBarItem alloc] initWithTitle:@"clts" image:[UIImage imageNamed:@"infosClients.png"] tag:3]; 
+	infosclients.tabBarItem = itemClients;
+	infosclients.title=@"Liste clients";
 	/*InfosClientsViewController *infosclients = [[InfosClientsViewController alloc]
 								  initWithNibName:@"InfosClientsViewController" bundle:nil];
 	infosclients.title=@"clients";*/
-	InfosBox *infosbox = [[InfosBox alloc]
-						initWithNibName:@"InfosBox" bundle:nil];
-	infosbox.title=@"box";
+	
 	InfosServicesViewController *services = [[InfosServicesViewController alloc]
 						initWithNibName:@"InfosServicesViewController" bundle:nil];
-							 services.title=@"services";
+							 services.title=@"Gestion Services";
+	UITabBarItem *itemServices = [[UITabBarItem alloc] initWithTitle:@"Services" image:[UIImage imageNamed:@"gestionServices.png"] tag:1]; 
+	services.tabBarItem = itemServices;
+
+	
 	
 	//ajout des controleurs aux tabbar
-	tabBarController.viewControllers = [NSArray arrayWithObjects:infosclients,infosbox,services,nil];
+	tabBarController.viewControllers = [NSArray arrayWithObjects:infosbox,ligneAdsl,infosclients,services,nil];
 	[infosclients release];
 	[infosbox release];
 	[services release];
-
-
-							 
-																			 
+	[ligneAdsl release];
+	[itemClients release];
+	[itemBox release];
+	[itemAdsl release];
+	[itemServices release];
 	[window addSubview:tabBarController.view];
     [self.window makeKeyAndVisible];
     

@@ -24,8 +24,10 @@
 	UITextField *champpassword;
 	UIButton *rebootButton;
 	UIButton *loginButton;
-	UITextView *loginTv;
-	UITextView *loggedTv;
+	UIButton *loginByServiceButton;
+	UILabel *btnServiceLabel;
+	UILabel *loginTv;
+	UILabel *loggedTv;
 
 
 	NSURLConnection *getConnection;
@@ -33,6 +35,19 @@
 	
 	NSURLConnection *postConnection;
 	NSMutableData *postData;
+	
+	//parsage XML
+	NSXMLParser *rssParser;
+	NSMutableArray *stories;
+	
+	NSMutableDictionary *item;
+	
+	NSString *path;
+	
+	NSString *currentElement;
+	
+	NSMutableString *currentAuth, *currentToken, *currentConnection, *currentHost, *currentStat, *currentDate, *currentSummary, *currentLink;
+	
 
 
 }
